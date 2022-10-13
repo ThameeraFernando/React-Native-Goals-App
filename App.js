@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+} from "react-native";
 
 //Text, View build in components in react-native
 //This is the root component that we render
@@ -32,14 +39,16 @@ export default function App() {
       </View>
       {/* list of goals */}
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
-        {courseGoals.map((goal) => {
-          return (
-            <Text style={styles.goalItem}>
-              <Text>{goal}</Text>
-            </Text>
-          );
-        })}
+        <ScrollView alwaysBounceVertical={false}>
+          <Text>List of goals...</Text>
+          {courseGoals.map((goal) => {
+            return (
+              <Text style={styles.goalItem}>
+                <Text>{goal}</Text>
+              </Text>
+            );
+          })}
+        </ScrollView>
       </View>
     </View>
   );
