@@ -1,13 +1,7 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import GoalInput from "./components/GoalInput";
+import GoalItem from "./components/GoalItem";
 
 //Text, View build in components in react-native
 //This is the root component that we render
@@ -16,15 +10,9 @@ import {
 // in flex boxes in the cross axes we can change in the parent box boxes alignItems (stretch is default)
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-  const goalInputHandler = (inputText) => {
-    // console.log(inputText);
-    setEnteredGoal(inputText);
-  };
-  const addGoalHandler = () => {
-    // console.log(enteredGoal);
-    // setCourseGoals([...courseGoals, enteredGoal]);
+
+  const addGoalHandler = (enteredGoal) => {
     setCourseGoals((currentGoals) => [
       ...currentGoals,
       { text: enteredGoal, Key: Math.random().toString() },
@@ -33,29 +21,15 @@ export default function App() {
   return (
     <View style={styles.appContainer}>
       {/* input area */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goals"
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
+      <GoalInput addGoalHandler={addGoalHandler} />
       {/* list of goals */}
       <View style={styles.goalsContainer}>
         <Text>List of goals...</Text>
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return (
-              <Text style={styles.goalItem}>
-                <Text>{itemData.item.text}</Text>
-              </Text>
-            );
+            return <GoalItem text={itemData.item.text} />;
           }}
-          // keyExtractor={(item, index) => {
-          //   return item.key;
-          // }}
           alwaysBounceVertical={false}
         />
       </View>
